@@ -31,11 +31,15 @@ public class ClientHandler implements Runnable {
     public void run() {
 
         while (true) {
-            dsInp.readUTF()
-            String ask=;
+            try {
+                String ask=dsInp.readUTF();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String command=;
             String id=;
             String passWord=;
-            if (ask.equals("L")){
+            if (command.equals("L")){
                 if (logIn(id, passWord) == 0) {
                     //next page
                     break;
@@ -45,7 +49,7 @@ public class ClientHandler implements Runnable {
             }
             //ask to sign up
             //send name and pass
-            if(ask.equals("S")){
+            if(command.equals("S")){
                 if (signUp(id, passWord) == 0) {
                     this.name = name;
                     this.lastName = lastName;
