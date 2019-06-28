@@ -108,7 +108,7 @@ public class ClientHandler implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            char command1= Spliterer.page1(ask);
+            char command1= Spliter.page1(ask);
 
             //change class options
             {

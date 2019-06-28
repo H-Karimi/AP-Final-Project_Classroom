@@ -1,4 +1,4 @@
-public class Spliterer {
+public class Spliter {
     static String[] page0(String ask) {
         String[] arrOfStr = new String[3];
         arrOfStr[0] = ask.substring(1, 2);
