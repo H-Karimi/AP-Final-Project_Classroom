@@ -6,8 +6,6 @@ public class ClientHandler implements Runnable {
 
     private String id;
     private String passWord;
-    private String name;
-    private String lastName;
     private LinkedHashSet<ClassRoom> teacherClass = new LinkedHashSet<>();
     private LinkedHashSet<ClassRoom> studentClass = new LinkedHashSet<>();
     private Socket clientSocket;
@@ -31,37 +29,87 @@ public class ClientHandler implements Runnable {
     public void run() {
 
         while (true) {
+            String ask = null;
             try {
-                String ask=dsInp.readUTF();
+                ask = dsInp.readUTF();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String command=;
-            String id=;
-            String passWord=;
-            if (command.equals("L")){
-                if (logIn(id, passWord) == 0) {
-                    //next page
+            String[] arrOfStr = Spliterer.page0(ask);
+            String command1 = arrOfStr[0];
+            String id = arrOfStr[1];
+            String passWord = arrOfStr[2];
+            if (command1.equals("L")) {
+                byte logInCheck = logIn(id, passWord);
+                if (logInCheck == 0) {
+                    try {
+                        dsOut.writeUTF("#E0");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //loading details
                     break;
+                } else if (logInCheck == 1) {
+                    try {
+                        dsOut.writeUTF("#E1");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else if (logInCheck == 2) {
+                    try {
+                        dsOut.writeUTF("#E2");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    //send error
+                    try {
+                        dsOut.writeUTF("#E999");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-            //ask to sign up
-            //send name and pass
-            if(command.equals("S")){
-                if (signUp(id, passWord) == 0) {
-                    this.name = name;
-                    this.lastName = lastName;
-                    //next page
+            if (command1.equals("S")) {
+                if (checkUserNameExist(id)) {
+                    this.id = arrOfStr[1];
+                    this.passWord = arrOfStr[2];
+                    try {
+                        dsOut.writeUTF("#E0");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 } else {
-                    //send error
+                    try {
+                        dsOut.writeUTF("#E3");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            if (command1.equals("C")) {
+                try {
+                    if (checkUserNameExist(id)) {
+                        dsOut.writeUTF("#E4");
+                    } else {
+                        dsOut.writeUTF("#E3");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
-        //send menu message
-        {
+
+        //send menu details
+        while (true) {
+            String ask=null;
+            try {
+                ask=dsInp.readUTF();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            char command1= Spliterer.page1(ask);
+
             //change class options
             {
 
@@ -82,10 +130,7 @@ public class ClientHandler implements Runnable {
             {
 
             }
-            //refresh
-            {
 
-            }
             //update
             {
 
@@ -111,7 +156,9 @@ public class ClientHandler implements Runnable {
         //unknown error
         return 0;
     }
-    private byte signUp(String id, String passWord) {
+
+
+    private boolean checkUserNameExist(String id) {
         if (true/*check in file*/) {
 
         } else if (true/*unavailable id*/) {
@@ -119,7 +166,7 @@ public class ClientHandler implements Runnable {
         }
 
         //unknown error
-        return 0;
+        return true;
     }
 }
 
