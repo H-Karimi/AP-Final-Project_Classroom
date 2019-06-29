@@ -1,8 +1,16 @@
 import java.io.*;
 import java.net.*;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.Map;
 
 public class ClientHandler implements Runnable {
+
+    static Hashtable<Integer, ClientHandler> list = new Hashtable<>();
+    static Hashtable<Integer, ClientHandler> logedInClients = new Hashtable<>();
+
+
 
     private String id;
     private String passWord;
@@ -25,6 +33,14 @@ public class ClientHandler implements Runnable {
     }
 
 
+    public String getId() {
+        return id;
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+
     @Override
     public void run() {
 
@@ -35,7 +51,7 @@ public class ClientHandler implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String[] arrOfStr = Spliterer.page0(ask);
+            String[] arrOfStr = ask.split("#");
             String command1 = arrOfStr[0];
             String id = arrOfStr[1];
             String passWord = arrOfStr[2];
@@ -101,39 +117,71 @@ public class ClientHandler implements Runnable {
         }
 
         //send menu details
+        String respond0 = mainMenuDetailsToString();
+        try {
+            dsOut.writeUTF(respond0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         while (true) {
-            String ask=null;
+            String ask = null;
             try {
-                ask=dsInp.readUTF();
+                ask = dsInp.readUTF();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            char command1= Spliter.page1(ask);
-
+            String[] arrOfStr = ask.split("#");
+            String command = arrOfStr[0];
             //change class options
-            {
+            if (command.equals("O")) {
 
             }
             //enter class
-            {
-
+            if (command.equals("E")) {
+                int code = Integer.parseInt(arrOfStr[1]);//class code
+                ClassRoom myclass = ClassRoom.getClass(code);
+                //send my class details
             }
-            //exitfromclass
-            {
-
+            //exit from class
+            if (command.equals("X")) {
+                int code = Integer.parseInt(arrOfStr[1]);//class code
+                ClassRoom myclass = ClassRoom.getClass(code);
+                boolean done = myclass.removeStudent(this);
+                this.studentClass.remove(myclass);
+                String respond1 = mainMenuDetailsToString();
+                try {
+                    dsOut.writeUTF(respond1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             //make class
-            {
-
+            if (command.equals("M")) {
+                String name = arrOfStr[1], descript = arrOfStr[2];
+                int room = Integer.parseInt(arrOfStr[3]);
+                ClassRoom myclass = new ClassRoom(name, descript, room, this);
+                this.teacherClass.add(myclass);
+                //send class details
             }
             //join class
-            {
-
+            if (command.equals("J")) {
+                int code = Integer.parseInt(arrOfStr[1]);//class code
+                ClassRoom myclass = ClassRoom.getClass(code);
+                myclass.setStudent(this);
+                this.studentClass.add(myclass);
+                //send class details
             }
 
             //update
-            {
-
+            if (command.equals("U")) {
+                String respond1 = mainMenuDetailsToString();
+                try {
+                    dsOut.writeUTF(respond1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             //notification
             {
@@ -168,6 +216,27 @@ public class ClientHandler implements Runnable {
         //unknown error
         return true;
     }
+
+    String mainMenuDetailsToString() {
+        String respond = "#T#" + teacherClass.size();
+        synchronized (teacherClass) {
+            Iterator itr = teacherClass.iterator();
+            while (itr.hasNext()) {
+                ClassRoom c = (ClassRoom) itr.next();
+                respond += c.getClassName() + "#" + c.getStudentsSize();
+            }
+        }
+        respond += "#S#" + studentClass.size();
+        synchronized (studentClass) {
+            Iterator itr = studentClass.iterator();
+            while (itr.hasNext()) {
+                ClassRoom c = (ClassRoom) itr.next();
+                respond += c.getClassName() + "#" + c.getTeacherName();
+            }
+        }
+        return respond;
+    }
+
 }
 
 

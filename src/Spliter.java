@@ -1,9 +1,6 @@
 public class Spliter {
     static String[] page0(String ask) {
-        String[] arrOfStr = new String[3];
-        arrOfStr[0] = ask.substring(1, 2);
-        arrOfStr[1] = ask.substring(2, ask.indexOf('.'));
-        arrOfStr[2] = ask.substring(ask.indexOf('.'));
+        String[] arrOfStr = ask.split("#");
         return arrOfStr;
     }
     static char page1(String ask){
