@@ -3,22 +3,27 @@
     package="com.classroom.zed.classroom">
 
     <application
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".WelcomeActivity"></activity>
+        <activity android:name=".SigninActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ClassesActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SigninActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+
+        <activity android:name=".CreatClassActivity"
+            android:parentActivityName=".ClassesActivity"/>
+        <activity android:name=".JoinClassActivity"
+            android:parentActivityName=".ClassesActivity"/>
     </application>
 
 </manifest>
