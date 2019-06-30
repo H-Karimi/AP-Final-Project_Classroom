@@ -4,7 +4,9 @@
 
     <item android:title="Refresh" />
     <item android:title="About Us" />
-    <item android:title="Create"
+    <item
+        android:id="@+id/create_submenu"
+        android:title="Create"
         app:showAsAction="always"
         android:enabled="false"/>
 </menu>

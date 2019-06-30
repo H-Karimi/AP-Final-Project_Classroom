@@ -18,6 +18,7 @@ public class SigninActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Sign in");
         setContentView(R.layout.activity_signin);
         username_et = findViewById(R.id.username_et);
         password_et = findViewById(R.id.password_et);
@@ -52,8 +53,20 @@ public class SigninActivity extends AppCompatActivity {
         signin_b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SigninActivity.this, ClassesActivity.class);
-                startActivity(intent);
+                if(!username_et.getText().toString().trim().equals("")  &&  !password_et.getText().toString().trim().equals("")) {
+                    Intent intent = new Intent(SigninActivity.this, ClassesActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    if (password_et.getText().toString().trim().equals(""))
+                        passwordError_tv.setText("Password field cannot be empty.");
+                    else
+                        passwordError_tv.setText("");
+                    if (username_et.getText().toString().trim().equals(""))
+                        usernameError_tv.setText("Username field cannot be empty.");
+                    else
+                        usernameError_tv.setText("");
+                }
             }
         });
     }

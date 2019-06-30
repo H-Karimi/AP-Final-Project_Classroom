@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/navigation_notification"
+        android:title="Notifications"
+        android:icon="@drawable/ic_notifications_white_24dp"
+        android:enabled="true"/>
+    <item
+        android:id="@+id/navigation_classwork"
+        android:title="Classwork"
+        android:icon="@drawable/ic_edit_white_24dp"
+        android:enabled="true"/>
+    <item
+        android:id="@+id/navigation_people"
+        android:title="People"
+        android:icon="@drawable/ic_person_white_24dp"
+        android:enabled="true"/>
+
+</menu>

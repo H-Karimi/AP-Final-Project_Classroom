@@ -12,23 +12,14 @@
         android:padding="40dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textAlignment="center"
-            android:textSize="36sp"
-
-            android:text="Sign-In" />
-
         <EditText
             android:id="@+id/username_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:hint="Username"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            />
 
         <TextView
             android:id="@+id/usernameError_tv"
@@ -61,7 +52,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:text="Sign-in" />
+            android:textColor="@color/white"
+            android:text="Sign-in"
+            android:background="@color/colorPrimaryDark"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
