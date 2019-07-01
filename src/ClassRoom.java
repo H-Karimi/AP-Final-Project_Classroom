@@ -33,18 +33,45 @@ public class ClassRoom {
         return classes.get(classCode);
     }
 
-    public void setTeacher(ClientHandler teacher) {
-        this.teachers.add(teacher);
+    public LinkedList<HomeWork> getHomeWorks() {
+        return homeWorks;
     }
 
-    public void setStudent(ClientHandler student) {
-        this.students.put(student.getId(), student);
+    public byte setTeacher(String id) {
+        if(SavedPerson.personList.containsKey(id)){
+            ClientHandler teacher=SavedPerson.personList.get(id);
+            if(students.containsValue(teacher)) {
+                students.remove(teacher.id, teacher);
+                teacher.removeStudentClass(this);
+            }
+                teachers.add(teacher);
+                teacher.setTeacherClass(this);
+                return 0;
+
+        }else{
+            return 1;
+        }
+
+    }
+
+    public byte setStudent(String id) {
+
+        if(SavedPerson.personList.containsKey(id)){
+            ClientHandler student=SavedPerson.personList.get(id);
+            if(teachers.contains(student)) {
+                return 2;
+            }
+            this.students.put(student.getId(), student);
+            student.setStudentClass(this);
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
     public boolean removeStudent(ClientHandler student) {
         return this.students.remove(student.getId(), student);
     }
-
 
     public String getClassName() {
         return className;
@@ -75,11 +102,11 @@ public class ClassRoom {
     }
 
     public int getStudentsSize() {
-        return classCode;
+        return students.size();
     }
 
     public int getTeachersSize() {
-        return classCode;
+        return teachers.size();
     }
 
     public String getTeacherName() {
@@ -90,7 +117,6 @@ public class ClassRoom {
         }
         return respond;
     }
-
 
     public void setTopic(String topic) {
         this.topics.add(new Topic(topic));
@@ -107,25 +133,33 @@ public class ClassRoom {
     }
 
     String classMenuDetailsToString() {
-        String respond = "#T#" + teachers.size();
+        //people
+        String respond = "#T";
         synchronized (teachers) {
             Iterator itr = teachers.iterator();
             while (itr.hasNext()) {
                 ClientHandler c = (ClientHandler) itr.next();
-                respond += c.getId() + "#";
+                respond += "#" + c.getId();
             }
         }
         respond += "#S#" + students.size();
         synchronized (students) {
             Iterator itr = students.keySet().iterator();
             while (itr.hasNext()) {
-                String c = (String)itr.next();
-                respond += c + "#";
+                String c = (String) itr.next();
+                respond += "#" + c;
             }
 
         }
+        //pictures?
+        //classswork
+
 
         return respond;
+    }
+
+    String classInfPageToString(){
+        return this.getClassName()+"#"+this.getClassCode()+"#"+(this.getDescription()==null?"":this.getDescription())+"#";
     }
 
     @Override

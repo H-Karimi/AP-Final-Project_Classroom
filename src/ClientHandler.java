@@ -1,21 +1,17 @@
 import java.io.*;
 import java.net.*;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.*;
 
-public class ClientHandler implements Runnable {
+public class ClientHandler extends SavedPerson implements Runnable {
 
-    static Hashtable<Integer, ClientHandler> list = new Hashtable<>();
-    static Hashtable<Integer, ClientHandler> logedInClients = new Hashtable<>();
+    static Hashtable<Integer, ClientHandler> connectedList = new Hashtable<>();
 
 
-
-    private String id;
-    private String passWord;
-    private LinkedHashSet<ClassRoom> teacherClass = new LinkedHashSet<>();
-    private LinkedHashSet<ClassRoom> studentClass = new LinkedHashSet<>();
+    /*
+        private String id;
+        private String passWord;
+        private LinkedHashSet<ClassRoom> teacherClass = new LinkedHashSet<>();
+        private LinkedHashSet<ClassRoom> studentClass = new LinkedHashSet<>();*/
     private Socket clientSocket;
     private DataInputStream dsInp;
     private DataOutputStream dsOut;
@@ -33,17 +29,16 @@ public class ClientHandler implements Runnable {
     }
 
 
-    public String getId() {
+    /*public String getId() {
         return id;
     }
 
     public String getPassWord() {
         return passWord;
-    }
+    }*/
 
     @Override
     public void run() {
-
         while (true) {
             String ask = null;
             try {
@@ -58,12 +53,13 @@ public class ClientHandler implements Runnable {
             if (command1.equals("L")) {
                 byte logInCheck = logIn(id, passWord);
                 if (logInCheck == 0) {
+                    importFromSavedPerson(personList.get(id));
+                    personList.put(id,this);
                     try {
                         dsOut.writeUTF("#E0");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    //loading details
                     break;
                 } else if (logInCheck == 1) {
                     try {
@@ -94,6 +90,7 @@ public class ClientHandler implements Runnable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    personList.put(this.id, this);
                     break;
                 } else {
                     try {
@@ -148,7 +145,7 @@ public class ClientHandler implements Runnable {
             if (command.equals("X")) {
                 int code = Integer.parseInt(arrOfStr[1]);//class code
                 ClassRoom myclass = ClassRoom.getClass(code);
-                boolean done = myclass.removeStudent(this);
+                myclass.removeStudent(this);
                 this.studentClass.remove(myclass);
                 String respond1 = mainMenuDetailsToString();
                 try {
@@ -169,7 +166,7 @@ public class ClientHandler implements Runnable {
             if (command.equals("J")) {
                 int code = Integer.parseInt(arrOfStr[1]);//class code
                 ClassRoom myclass = ClassRoom.getClass(code);
-                myclass.setStudent(this);
+                myclass.setStudent(this.id);
                 this.studentClass.add(myclass);
                 //send class details
             }
@@ -185,7 +182,6 @@ public class ClientHandler implements Runnable {
             }
             //notification
             {
-
             }
 
         }
@@ -193,28 +189,34 @@ public class ClientHandler implements Runnable {
     }
 
     private byte logIn(String id, String passWord) {
-        if (true/*check in file*/) {
-            //importing detailes
-        } else if (true/*wrong password*/) {
-
-        } else if (true/*no id*/) {
-
+        if (personList.containsKey(id) && personList.get(id).getPassWord().equals(passWord)) {
+            return 0;
+        //wrong pass
+        } else if (personList.containsKey(id)) {
+            return 2;
+        //no id
+        } else {
+            return 1;
         }
 
-        //unknown error
-        return 0;
+
+
+    }
+    private void importFromSavedPerson(ClientHandler ch){
+        this.id=ch.id;
+        this.passWord=ch.passWord;
+        this.teacherClass=ch.teacherClass;
+        this.studentClass=ch.studentClass;
     }
 
 
     private boolean checkUserNameExist(String id) {
-        if (true/*check in file*/) {
-
-        } else if (true/*unavailable id*/) {
-
+        if (personList.containsKey(id)) {
+            return false;
+        } else {
+            return true;
         }
 
-        //unknown error
-        return true;
     }
 
     String mainMenuDetailsToString() {
@@ -237,138 +239,29 @@ public class ClientHandler implements Runnable {
         return respond;
     }
 
-}
-
-
-/*
-public class ClientHandlerchange implements Runnable, Comparable {
-    static private int loggedInUsersCounter = 0;
-    static private int ClientCounter = 0;
-    static private IDHandler idHandler;
-
-
-    private String firstName;
-    private String lastName;
-
-
-    private boolean isLoggedin = false;
-
-
-    private Socket clientSocket;
-    private DataInputStream dsInp;
-    private DataOutputStream dsOut;
-
-    public ClientHandler(Socket clientSocket) throws IOException {
-        this.clientSocket = clientSocket;
-        dsInp = new DataInputStream(clientSocket.getInputStream());
-        dsOut = new DataOutputStream(clientSocket.getOutputStream());
-
-    }
-
-    public static void setIdHandler(IDHandler idHandler) {
-        ClientHandler.idHandler = idHandler;
-    }
-
-    public static int getLoggedInUsersCounter() {
-        return loggedInUsersCounter;
-    }
-
-    @Override
-    public void run() {
-        clientnumber = ++ClientCounter;
-        Log.Out("Client" + this.clientnumber + " regisred.");
+    void getImage(){
+        int i;
         try {
-            char command;
-            while (!isLoggedin) {
-                command = dsInp.readChar();
-                if (command == 's') {
-                    this.id = idHandler.getNewID();
-                    dsOut.writeUTF(this.id);
-                    isLoggedin = true;
-                    loggedInUsersCounter++;
-                    Log.Out("Client" + this.clientnumber + " Signed Up.");
-                } else if (command == 'l') {
-                    String userId = dsInp.readUTF();
-                    int temp = idHandler.logIn(userId);
-                    if (temp >= 0) {
-                        this.id = userId;
-                        this.score = temp;
-                        isLoggedin = true;
-                        loggedInUsersCounter++;
-                    }
-                    dsOut.writeUTF(String.format("%d", temp));
-                }
+            while ((i=dsInp.read())!=-1){
+                fos.write(i);
             }
-            while (isLoggedin) {
-                Log.Out("Client" + this.clientnumber + " Logged in.");
-                while (true) {
-                    int c = dsInp.readInt();
-                    if (c >= 0) {
-                        short s = Question.checkAnswer(c, this.id);
-                        dsOut.writeUTF(String.format("A>%d", s));
-                        if (s == 2) {
-                            Log.Out("Client" + this.clientnumber + " Wins.");
-                            score++;
-                        } else if (s == 1) {
-                            Log.Out("Client" + this.clientnumber + " Gussed right.");
-                        }
-                    } else if (c == -1) {//time
-                        dsOut.writeUTF(String.format("T>%03d", (gameIsAlive ? 120 : 60) - Question.getTimeSecond()));
-                    } else if (c == -2) {//score
-                        dsOut.writeUTF(String.format("S>%04d", this.score));
-                    } else if (c == -3) {//list
-                        dsOut.writeUTF("L>" + Server.getScoreBoard());
-                    }
-                }
-
-            }
-
-        } catch (IOException e) {
-            //e.printStackTrace();
+            fos.flush();
+            fos.close();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
-
-    public void gameStatus(boolean isAlive) {
-        gameIsAlive = isAlive;
-
+    void sendImage(){
+        int i;
         try {
-            if (!gameIsAlive)
-                dsOut.writeUTF(String.format("S>%04d", this.score));
-            dsOut.writeUTF(gameIsAlive ? "I>" : "O>");
-        } catch (IOException e) {
+            while ((i=fis.read())!=-1){
+                dsOut.write(i);
+            }
+            dsOut.flush();
+            dsOut.close();
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public int getClientNumber() {
-        return clientnumber;
-    }
-
-
-    public int getScore() {
-        return score;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public boolean isLoggedin() {
-        return isLoggedin;
-    }
-
-    public void shutDown() {
-        try {
-            dsOut.writeUTF("@");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        ClientHandler ch = (ClientHandler) o;
-        return this.score > ch.score ? -1 : 0;
-    }
 }
-*/

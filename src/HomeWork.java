@@ -1,5 +1,7 @@
 import java.io.File;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 
 public class HomeWork {
 
@@ -11,8 +13,16 @@ public class HomeWork {
     private double barom;
     private File attachedFile;
     private Hashtable<String,ClientHandler>students=new Hashtable<>();
+    private Hashtable<ClientHandler,Integer>grades=new Hashtable<>();
     //time
 
+
+    public Integer getGrades(ClientHandler clientHandler) {
+        return grades.get(clientHandler);
+    }
+    public Integer getGrades(String id) {
+        return grades.get(students.get(id));
+    }
 
     public HomeWork(ClassRoom classRoom, String name, String description, Topic topic, double barom, File attachedFile, Hashtable<String, ClientHandler> students) {
         this.classRoom = classRoom;
@@ -22,6 +32,10 @@ public class HomeWork {
         this.barom = barom;
         this.attachedFile = attachedFile;
         this.students = students;
+        Iterator itr=students.values().iterator();
+        while (itr.hasNext()){
+            grades.put((ClientHandler)itr.next(),0);
+        }
     }
 
     public ClassRoom getClassRoom() {

@@ -18,12 +18,12 @@ public class MyServer {
                 Socket clientSocket = null;
                 try {
                     clientSocket = serverSocket.accept();
-                    ClientHandler.list.put(i,new ClientHandler(i,clientSocket));
+                    ClientHandler.connectedList.put(i,new ClientHandler(i,clientSocket));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                Thread thread = new Thread(ClientHandler.list.get(i));
+                Thread thread = new Thread(ClientHandler.connectedList.get(i));
                 i++;
                 thread.start();
             }
