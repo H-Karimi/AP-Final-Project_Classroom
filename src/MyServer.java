@@ -31,6 +31,7 @@ public class MyServer {
         }).start();
 
 //shut down server
+/*
         new Thread(() -> {
             System.out.println("Shut down:Type something...");
             Scanner inp = new Scanner(System.in);
@@ -49,7 +50,7 @@ public class MyServer {
             }
         }).start();
 
-
+*/
 }
 
 }
