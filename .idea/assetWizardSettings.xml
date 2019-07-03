@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_account_circle_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_assignment_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -34,6 +34,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="outputName" value="ic_account_circle_grey" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="000000" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -69,7 +71,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_account_circle_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_assignment_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -80,12 +82,12 @@
                         <option name="values">
                           <map>
                             <entry key="autoMirrored" value="true" />
-                            <entry key="color" value="c3c3c3" />
-                            <entry key="height" value="150" />
-                            <entry key="outputName" value="ic_account_circle_grey_150dp" />
+                            <entry key="color" value="00574b" />
+                            <entry key="height" value="56" />
+                            <entry key="outputName" value="ic_assignment_green_56dp" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\sazgar" />
-                            <entry key="width" value="150" />
+                            <entry key="width" value="56" />
                           </map>
                         </option>
                       </PersistentState>

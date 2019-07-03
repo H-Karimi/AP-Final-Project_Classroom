@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.classroom.zed.classroom">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,14 +21,16 @@
         </activity>
         <activity android:name=".SigninActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ClassesActivity"/>
+        <activity android:name=".ClassesActivity" />
         <activity
             android:name=".CreateClassActivity"
             android:parentActivityName=".ClassesActivity" />
         <activity
             android:name=".JoinClassActivity"
             android:parentActivityName=".ClassesActivity" />
-        <activity android:name=".ClassPageActivity"/>
+        <activity android:name=".ClassPageActivity" />
+        <activity android:name=".AboutUsActivity" />
+        <activity android:name=".ClassWorkActivity"></activity>
     </application>
 
 </manifest>

@@ -19,6 +19,7 @@ public class ClassesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Classes");
         setContentView(R.layout.activity_classes);
         myRecyclerView = findViewById(R.id.classes_recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

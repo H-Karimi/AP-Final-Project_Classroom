@@ -128,6 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     // Set the image in ImageView
                     image_iv.setImageURI(selectedImageUri);
+
                 }
             }
         } catch (Exception e) {

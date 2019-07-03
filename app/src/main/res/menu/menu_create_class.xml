@@ -2,11 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="Refresh" />
-    <item android:title="About Us" />
+    <item android:title="Refresh"
+        android:id="@+id/refresh_create_class_menu"/>
+    <item android:title="About Us"
+        android:id="@+id/aboutus_create_class_menu"/>
     <item
         android:id="@+id/create_submenu"
         android:title="Create"
-        app:showAsAction="always"
-        android:enabled="false"/>
+        app:showAsAction="always"/>
 </menu>

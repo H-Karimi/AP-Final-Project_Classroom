@@ -2,9 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="Refresh" />
-    <item android:title="About Us" />
-    <item android:title="Join"
-        app:showAsAction="always"
-        android:enabled="false"/>
+    <item android:title="Refresh"
+        android:id="@+id/refresh_join_class_menu"/>
+    <item android:title="About Us"
+        android:id="@+id/aboutus_join_class_menu"/>
+    <item android:id="@+id/join_submenu"
+        android:title="Join"
+        app:showAsAction="always"/>
 </menu>
