@@ -30,7 +30,7 @@ public class JoinClassActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.refresh_join_class_menu:
                 break;
             case R.id.aboutus_join_class_menu:

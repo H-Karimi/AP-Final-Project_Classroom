@@ -34,9 +34,10 @@ public class ClassWorkActivity_RecyclerAdapter_Outer extends RecyclerView.Adapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
-        viewHolder.classwork_title_tv.setText(strings.get(i));
+        viewHolder.classwork_title_tv.setText(strings.get(i).split("#")[0]);
+
         linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        classWorkActivity_recyclerAdapter_inner = new ClassWorkActivity_RecyclerAdapter_Inner(this.context, getList());
+        classWorkActivity_recyclerAdapter_inner = new ClassWorkActivity_RecyclerAdapter_Inner(this.context, strings.get(i).split("#"));
         viewHolder.classwork_inner_recycler_view.setLayoutManager(linearLayoutManager);
         viewHolder.classwork_inner_recycler_view.setAdapter(classWorkActivity_recyclerAdapter_inner);
     }
@@ -46,9 +47,10 @@ public class ClassWorkActivity_RecyclerAdapter_Outer extends RecyclerView.Adapte
         return strings.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView classwork_title_tv;
         private RecyclerView classwork_inner_recycler_view;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             classwork_title_tv = itemView.findViewById(R.id.classwork_title_tv);
@@ -56,17 +58,4 @@ public class ClassWorkActivity_RecyclerAdapter_Outer extends RecyclerView.Adapte
         }
     }
 
-
-    private List<String> getList(){
-        List<String> list = new ArrayList<>();
-        list.add("asdfghjk");
-        list.add("12345678");
-        list.add("qwertyui");
-        list.add("zxcvbnm,");
-        list.add("asdfghjk");
-        list.add("12345678");
-        list.add("qwertyui");
-        list.add("zxcvbnm,");
-        return list;
-    }
 }

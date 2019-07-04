@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:hint="Room"
             android:inputType="numberDecimal"
-            android:maxLength="4"/>
+            android:maxLength="5"/>
 
         <TextView
             android:id="@+id/roomError_tv"

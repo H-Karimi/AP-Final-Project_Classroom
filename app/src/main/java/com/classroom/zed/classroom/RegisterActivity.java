@@ -2,6 +2,8 @@ package com.classroom.zed.classroom;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 
@@ -93,6 +96,18 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!username_et.getText().toString().trim().equals("")  &&  !password_et.getText().toString().trim().equals("")  &&
                         password_et.getText().toString().trim().length() > 5) {
+                    BitmapDrawable drawable = (BitmapDrawable) image_iv.getDrawable();
+                    Bitmap bitmap = drawable.getBitmap();
+
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream .toByteArray();
+
+                    String image_byte=String.valueOf(byteArray);
+
+                    Communicator communicator = new Communicator();
+                    communicator.execute(image_byte);
+
                     Intent intent = new Intent(RegisterActivity.this, ClassesActivity.class);
                     startActivity(intent);
                 }

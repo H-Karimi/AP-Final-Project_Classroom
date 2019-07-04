@@ -28,19 +28,20 @@ public class ClassworkFragment extends Fragment {
 
         recyclerView = rootView.findViewById(R.id.classwork_outer_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false);
-        ClassWorkActivity_RecyclerAdapter_Outer classWorkActivity_recyclerAdapter_outer = new ClassWorkActivity_RecyclerAdapter_Outer(rootView.getContext(), getList());
+        ClassWorkActivity_RecyclerAdapter_Outer adapter = new ClassWorkActivity_RecyclerAdapter_Outer(rootView.getContext(), getList());
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(classWorkActivity_recyclerAdapter_outer);
+        recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         return rootView;
     }
 
-    private List<String> getList(){
+    private List<String> getList() {
         List<String> list = new ArrayList<>();
-        list.add("asdfghjk");
-        list.add("12345678");
-        list.add("qwertyui");
-        list.add("zxcvbnm,");
+        list.add("OOP#Assignment1#Date1#Assignment2#Date2");
+        list.add("Socket#Assignment3#Date3#Assignment4#Date4");
+        list.add("IO#Assignment5#Date5#Assignment6#Date6");
+        list.add("Lorem#Assignment7#Date7#Assignment8#Date8");
         return list;
     }
 }

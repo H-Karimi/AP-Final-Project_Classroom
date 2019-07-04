@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 public class ClassPageActivity extends AppCompatActivity {
@@ -50,4 +51,27 @@ public class ClassPageActivity extends AppCompatActivity {
 
         return false;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_class_page, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getTitle().equals("Classes")){
+            Intent intent = new Intent(ClassPageActivity.this, ClassesActivity.class);
+            startActivity(intent);
+        }
+        else if(item.getTitle().equals("Info")){
+            Intent intent = new Intent(ClassPageActivity.this, ClassInfoActivity.class);
+            startActivity(intent);
+        }
+        else if(item.getTitle().equals("Settings")){
+            Intent intent = new Intent(ClassPageActivity.this, ClassSettingsActivity.class);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

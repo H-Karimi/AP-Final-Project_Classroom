@@ -13,9 +13,9 @@ import java.util.List;
 public class ClassWorkActivity_RecyclerAdapter_Inner extends RecyclerView.Adapter<ClassWorkActivity_RecyclerAdapter_Inner.MyViewHolder> {
 
     private Context context;
-    private List<String> strings;
+    private String[] strings;
 
-    public ClassWorkActivity_RecyclerAdapter_Inner(Context context, List<String> strings) {
+    public ClassWorkActivity_RecyclerAdapter_Inner(Context context, String[] strings) {
         this.context = context;
         this.strings = strings;
     }
@@ -29,13 +29,13 @@ public class ClassWorkActivity_RecyclerAdapter_Inner extends RecyclerView.Adapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
-        viewHolder.classwork_name_tv.setText(strings.get(i).substring(0, 4));
-        viewHolder.classwork_date_tv.setText(strings.get(i).substring(4, 8));
+        viewHolder.classwork_name_tv.setText(strings[i*2 + 1]);
+        viewHolder.classwork_date_tv.setText(strings[i*2 + 2]);
     }
 
     @Override
     public int getItemCount() {
-        return strings.size();
+        return strings.length/2;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{

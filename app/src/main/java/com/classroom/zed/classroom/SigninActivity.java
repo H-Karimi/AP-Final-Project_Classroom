@@ -9,6 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class SigninActivity extends AppCompatActivity {
+
+    Communicator communicator;
+
+
     EditText username_et;
     EditText password_et;
     TextView usernameError_tv;
@@ -54,8 +58,11 @@ public class SigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!username_et.getText().toString().trim().equals("")  &&  !password_et.getText().toString().trim().equals("")) {
-                    Intent intent = new Intent(SigninActivity.this, ClassesActivity.class);
-                    startActivity(intent);
+                    communicator = new Communicator();
+                    if((communicator.doInBackground(username_et.getText().toString().trim() + "#" + password_et.getText().toString().trim()).equals("OK"))){
+                        Intent intent = new Intent(SigninActivity.this, ClassesActivity.class);
+                        startActivity(intent);
+                    }
                 }
                 else {
                     if (password_et.getText().toString().trim().equals(""))

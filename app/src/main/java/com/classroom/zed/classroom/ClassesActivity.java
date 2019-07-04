@@ -8,11 +8,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassesActivity extends AppCompatActivity {
+public class ClassesActivity extends AppCompatActivity implements ClassesActivity_RecyclerAdapter.OnItemListener {
 
     private RecyclerView myRecyclerView;
 
@@ -23,7 +24,7 @@ public class ClassesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_classes);
         myRecyclerView = findViewById(R.id.classes_recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        ClassesActivity_RecyclerAdapter classesActivity_recyclerAdapter = new ClassesActivity_RecyclerAdapter(this, getList());
+        ClassesActivity_RecyclerAdapter classesActivity_recyclerAdapter = new ClassesActivity_RecyclerAdapter(this, getList(), this);
         myRecyclerView.setLayoutManager(linearLayoutManager);
         myRecyclerView.setAdapter(classesActivity_recyclerAdapter);
         myRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -31,30 +32,9 @@ public class ClassesActivity extends AppCompatActivity {
 
     private List<String> getList(){
         List<String> strings = new ArrayList<>();
-        strings.add("abc");
-        strings.add("bcd");
-        strings.add("cde");
-        strings.add("hkj");
-        strings.add("abc");
-        strings.add("bcd");
-        strings.add("cde");
-        strings.add("hkj");
-        strings.add("abc");
-        strings.add("bcd");
-        strings.add("cde");
-        strings.add("hkj");
-        strings.add("abc");
-        strings.add("bcd");
-        strings.add("cde");
-        strings.add("hkj");
-        strings.add("abc");
-        strings.add("bcd");
-        strings.add("cde");
-        strings.add("hkj");
-        strings.add("abc");
-        strings.add("bcd");
-        strings.add("cde");
-        strings.add("hkj");
+        strings.add("AP#Computer#Mamad Mamadi");
+        strings.add("Mathematics#3124789471#25 Students");
+        strings.add("Geography#Lorem Ipsum#Asghar");
         return strings;
     }
 
@@ -75,5 +55,10 @@ public class ClassesActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(this, "Clicked." + position, Toast.LENGTH_LONG).show();
     }
 }
