@@ -16,10 +16,12 @@ import java.util.Objects;
 
 public class ClassSettingsActivity extends AppCompatActivity {
 
+    private String output = "";
+    private String input = "";
+
     private EditText class_settings_title_et;
     private TextView class_settings_title_error_tv;
     private EditText class_settings_description_et;
-    private EditText class_settings_section_et;
     private EditText class_settings_room_et;
     private TextView class_settings_room_error_tv;
     private FrameLayout class_settings_code_frame;
@@ -33,16 +35,40 @@ public class ClassSettingsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_class_settings);
 
+        Communicator communicator = new Communicator();
+        communicator.execute(getIntent().getExtras().getString("ClassCode") + "@@@COP");
+        try {
+            input = communicator.get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         class_settings_title_et = findViewById(R.id.class_settings_title_et);
         class_settings_title_error_tv = findViewById(R.id.class_settings_title_error_tv);
         class_settings_description_et = findViewById(R.id.class_settings_description_et);
-        class_settings_section_et = findViewById(R.id.class_settings_section_et);
         class_settings_room_et = findViewById(R.id.class_settings_room_et);
         class_settings_room_error_tv = findViewById(R.id.class_settings_room_error_tv);
         class_settings_code_frame = findViewById(R.id.class_settings_code_frame);
         class_settings_code_tv = findViewById(R.id.class_settings_code_tv);
         class_settings_stream_frame = findViewById(R.id.class_settings_stream_frame);
         class_settings_stream_tv = findViewById(R.id.class_settings_stream_tv);
+
+
+        class_settings_title_et.setText(input.split("~")[0]);
+        class_settings_code_tv.setText("Class code: " + input.split("~")[1]);
+        class_settings_description_et.setText(input.split("~")[2]);
+        class_settings_room_et.setText(input.split("~")[3]);
+        switch (input.split("~")[4]){
+            case "B":
+                class_settings_stream_tv.setText("Teachers and students can leave comment.");
+                break;
+            case "C":
+                class_settings_stream_tv.setText("Only teachers can leave comment.");
+                break;
+            case "N":
+                class_settings_stream_tv.setText("No comment is permitted.");
+                break;
+        }
 
 
         class_settings_stream_frame.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +89,28 @@ public class ClassSettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (!class_settings_title_et.getText().toString().trim().isEmpty() && !class_settings_room_et.getText().toString().trim().isEmpty()) {
+            output = class_settings_title_et.getText().toString().trim() + "#" +
+                    class_settings_description_et.getText().toString().trim() + "#" +
+                    class_settings_room_et.getText().toString().trim() + "#";
+            if(class_settings_stream_tv.getText().toString().charAt(0) == 'T')
+                output += "B";
+            if(class_settings_stream_tv.getText().toString().charAt(0) == 'O')
+                output += "C";
+            if(class_settings_stream_tv.getText().toString().charAt(0) == 'N')
+                output += "N";
+
+            Communicator communicator = new Communicator();
+            communicator.execute(output);
+            try {
+                input = communicator.get();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             Toast.makeText(ClassSettingsActivity.this, "Changes saved.", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(ClassSettingsActivity.this, ClassPageActivity.class);
+            intent.putExtra("ClassCode", class_settings_code_tv.getText().toString().replace("Class code: ", ""));
+            intent.putExtra("ClassState", "T");
+            startActivity(intent);
         }
         else {
             if (class_settings_title_et.getText().toString().trim().isEmpty())

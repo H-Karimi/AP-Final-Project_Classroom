@@ -7,7 +7,7 @@
         android:title="Refresh" />
     <item
         android:id="@+id/aboutus_join_class_menu"
-        android:title="About Us" />
+        android:title="About us" />
     <item
         android:id="@+id/join_submenu"
         android:title="Join"

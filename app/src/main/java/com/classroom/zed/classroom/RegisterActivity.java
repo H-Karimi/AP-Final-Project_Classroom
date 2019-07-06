@@ -3,12 +3,15 @@ package com.classroom.zed.classroom;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +23,10 @@ import java.io.File;
 import java.util.concurrent.ExecutionException;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    String output = "";
+    String input = "";
+
     ImageView image_iv;
     EditText username_et;
     EditText password_et;
@@ -45,32 +52,23 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"),1);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
             }
         });
 
         username_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
 
                     if (username_et.getText().toString().trim().equals(""))
                         usernameError_tv.setText("Username field cannot be empty.");
                     else {
                         usernameError_tv.setText("");
-                        String input = "";
-                        Communicator communicator = new Communicator();
-                        communicator.execute("#C" + username_et.getText().toString().trim());
-                        try {
-                            input = communicator.get();
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        if(input.equals("0"))
+                        checkUsername();
+                        if (input.equals("E#4"))
                             usernameError_tv.setText("");
-                        else if(input.equals("1"))
+                        else if (input.equals("E#3"))
                             usernameError_tv.setText("This username in occupied. Try another.");
                     }
                 }
@@ -80,10 +78,10 @@ public class RegisterActivity extends AppCompatActivity {
         password_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
                     if (password_et.getText().toString().trim().equals(""))
                         passwordError_tv.setText("Password field cannot be empty.");
-                    else if(password_et.getText().toString().trim().length() < 6)
+                    else if (password_et.getText().toString().trim().length() < 6)
                         passwordError_tv.setText("Password should be at least 6 characters.");
                     else
                         passwordError_tv.setText("");
@@ -94,27 +92,45 @@ public class RegisterActivity extends AppCompatActivity {
         register_b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!username_et.getText().toString().trim().equals("")  &&  !password_et.getText().toString().trim().equals("")  &&
+                if (!username_et.getText().toString().trim().equals("") && !password_et.getText().toString().trim().equals("") &&
                         password_et.getText().toString().trim().length() > 5) {
-                    BitmapDrawable drawable = (BitmapDrawable) image_iv.getDrawable();
-                    Bitmap bitmap = drawable.getBitmap();
 
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-                    byte[] byteArray = byteArrayOutputStream .toByteArray();
-
-                    String image_byte=String.valueOf(byteArray);
+                    checkUsername();
+                    if (input.equals("E#4"))
+                        usernameError_tv.setText("");
+                    else if (input.equals("E#3")) {
+                        usernameError_tv.setText("This username in occupied. Try another.");
+                        return;
+                    }
+//                    BitmapDrawable drawable = (BitmapDrawable) image_iv.getDrawable();
+//                    Bitmap bitmap = drawable.getBitmap();
+//
+//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+//                    byte[] byteArray = byteArrayOutputStream.toByteArray();
+//
+////                    String image_byte = String.valueOf(byteArray);
+//                    String image_string = "";
+//                    for (int i = 0 ; i < byteArray.length ; i++){
+//                        image_string += String.valueOf(byteArray[i]);
+//                    }
+                    output = "S#" + username_et.getText().toString().trim() + "#" + password_et.getText().toString().trim();
 
                     Communicator communicator = new Communicator();
-                    communicator.execute(image_byte);
-
-                    Intent intent = new Intent(RegisterActivity.this, ClassesActivity.class);
-                    startActivity(intent);
-                }
-                else{
+                    communicator.execute(output);
+                    try {
+                        input = communicator.get();
+                    } catch (ExecutionException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if(input.equals("E#0")){
+                        Intent intent = new Intent(RegisterActivity.this, ClassesActivity.class);
+                        startActivity(intent);
+                    }
+                } else {
                     if (password_et.getText().toString().trim().equals(""))
                         passwordError_tv.setText("Password field cannot be empty.");
-                    else if(password_et.getText().toString().trim().length() < 6)
+                    else if (password_et.getText().toString().trim().length() < 6)
                         passwordError_tv.setText("Password should be at least 6 characters.");
                     else
                         passwordError_tv.setText("");
@@ -161,5 +177,15 @@ public class RegisterActivity extends AppCompatActivity {
         }
         cursor.close();
         return res;
+    }
+
+    private void checkUsername(){
+        Communicator communicator = new Communicator();
+        communicator.execute("C#" + username_et.getText().toString().trim() + "#.");
+        try {
+            input = communicator.get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

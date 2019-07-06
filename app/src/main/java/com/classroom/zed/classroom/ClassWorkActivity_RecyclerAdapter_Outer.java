@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,15 @@ public class ClassWorkActivity_RecyclerAdapter_Outer extends RecyclerView.Adapte
 
     private Context context;
     private List<String> strings;
+    private ClassInfo classInfo;
 
     private LinearLayoutManager linearLayoutManager;
     private ClassWorkActivity_RecyclerAdapter_Inner classWorkActivity_recyclerAdapter_inner;
 
-    public ClassWorkActivity_RecyclerAdapter_Outer(Context context, List<String> strings) {
+    public ClassWorkActivity_RecyclerAdapter_Outer(Context context, List<String> strings, ClassInfo classInfo) {
         this.context = context;
         this.strings = strings;
+        this.classInfo = classInfo;
     }
 
     @NonNull
@@ -34,10 +37,10 @@ public class ClassWorkActivity_RecyclerAdapter_Outer extends RecyclerView.Adapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
-        viewHolder.classwork_title_tv.setText(strings.get(i).split("#")[0]);
+        viewHolder.classwork_title_tv.setText(strings.get(i).split("!")[0]);
 
         linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        classWorkActivity_recyclerAdapter_inner = new ClassWorkActivity_RecyclerAdapter_Inner(this.context, strings.get(i).split("#"));
+        classWorkActivity_recyclerAdapter_inner = new ClassWorkActivity_RecyclerAdapter_Inner(this.context, strings.get(i).split("!"), classInfo);
         viewHolder.classwork_inner_recycler_view.setLayoutManager(linearLayoutManager);
         viewHolder.classwork_inner_recycler_view.setAdapter(classWorkActivity_recyclerAdapter_inner);
     }

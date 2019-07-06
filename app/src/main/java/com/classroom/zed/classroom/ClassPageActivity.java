@@ -11,17 +11,30 @@ import android.view.MenuItem;
 
 public class ClassPageActivity extends AppCompatActivity {
 
+    private String input = "";
+
     BottomNavigationView bottomNavigationView;
+    ClassInfo classInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Class");
         setContentView(R.layout.activity_class_page);
+        classInfo = new ClassInfo(getIntent().getExtras().getString("ClassCode"), getIntent().getExtras().getString("ClassState"));
+
+        Communicator communicator = new Communicator();
+        communicator.execute(classInfo.getCode() + "@@@CP");
+        try {
+            input = communicator.get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         loadFragment(new ClassworkFragment());
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_classwork);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
@@ -45,7 +58,6 @@ public class ClassPageActivity extends AppCompatActivity {
     private boolean loadFragment(Fragment fragment){
         if(fragment != null){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-
             return true;
         }
 
@@ -55,23 +67,40 @@ public class ClassPageActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_class_page, menu);
+        if (classInfo.getState().equals("T")){
+            menu.findItem(R.id.class_page_info).setVisible(false);
+            menu.findItem(R.id.class_page_settings).setVisible(true);
+        }
+        if (classInfo.getState().equals("S")){
+            menu.findItem(R.id.class_page_settings).setVisible(false);
+            menu.findItem(R.id.class_page_info).setVisible(true);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = null;
         if(item.getTitle().equals("Classes")){
-            Intent intent = new Intent(ClassPageActivity.this, ClassesActivity.class);
-            startActivity(intent);
+            intent = new Intent(ClassPageActivity.this, ClassesActivity.class);
+        }
+        else if(item.getTitle().equals("About us")){
+            intent = new Intent(ClassPageActivity.this, AboutUsActivity.class);
         }
         else if(item.getTitle().equals("Info")){
-            Intent intent = new Intent(ClassPageActivity.this, ClassInfoActivity.class);
-            startActivity(intent);
+            intent = new Intent(ClassPageActivity.this, ClassInfoActivity.class);
+            intent.putExtra("ClassCode", classInfo.getCode());
         }
         else if(item.getTitle().equals("Settings")){
-            Intent intent = new Intent(ClassPageActivity.this, ClassSettingsActivity.class);
+            intent = new Intent(ClassPageActivity.this, ClassSettingsActivity.class);
+            intent.putExtra("ClassCode", classInfo.getCode());
         }
+        if(intent != null)
+            startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
+    public String getClassInfo(){
+        return input;
+    }
 }

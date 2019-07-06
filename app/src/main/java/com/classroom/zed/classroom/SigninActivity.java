@@ -8,10 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.concurrent.ExecutionException;
+
 public class SigninActivity extends AppCompatActivity {
 
-    Communicator communicator;
-
+    String output = "";
+    String input = "";
 
     EditText username_et;
     EditText password_et;
@@ -39,6 +41,9 @@ public class SigninActivity extends AppCompatActivity {
                     else
                         usernameError_tv.setText("");
                 }
+                else {
+                    usernameError_tv.setText("");
+                }
             }
         });
 
@@ -51,6 +56,9 @@ public class SigninActivity extends AppCompatActivity {
                     else
                         passwordError_tv.setText("");
                 }
+                else {
+                    passwordError_tv.setText("");
+                }
             }
         });
 
@@ -58,8 +66,21 @@ public class SigninActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!username_et.getText().toString().trim().equals("")  &&  !password_et.getText().toString().trim().equals("")) {
-                    communicator = new Communicator();
-                    if((communicator.doInBackground(username_et.getText().toString().trim() + "#" + password_et.getText().toString().trim()).equals("OK"))){
+                    output = "L#" + username_et.getText().toString().trim() + "#" + password_et.getText().toString().trim();
+                    Communicator communicator = new Communicator();
+                    communicator.execute(output);
+                    try {
+                        input = communicator.get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                    if(input.equals("E#1")){
+                        usernameError_tv.setText("Username not found.");
+                    }
+                    else if(input.equals("E#2")){
+                        passwordError_tv.setText("Password is incorrect");
+                    }
+                    else if (input.equals("E#0")){
                         Intent intent = new Intent(SigninActivity.this, ClassesActivity.class);
                         startActivity(intent);
                     }

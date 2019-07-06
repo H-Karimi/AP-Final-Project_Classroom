@@ -4,7 +4,7 @@
 
     <item android:title="Refresh"
         android:id="@+id/refresh_create_class_menu"/>
-    <item android:title="About Us"
+    <item android:title="About us"
         android:id="@+id/aboutus_create_class_menu"/>
     <item
         android:id="@+id/create_submenu"

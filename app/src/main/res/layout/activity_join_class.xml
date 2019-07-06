@@ -15,16 +15,24 @@
 
 
         <TextView
-            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ask your teacher for the class code, then enter it here." />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/join_class_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:hint="Class code" />
+
+        <TextView
+            android:id="@+id/join_class_error_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:textColor="#f4045c"
+            android:textSize="14sp" />
+
     </LinearLayout>
 </RelativeLayout>

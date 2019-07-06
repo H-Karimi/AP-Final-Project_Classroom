@@ -12,31 +12,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WelcomeActivity"></activity>
-        <activity android:name=".SigninActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".ClassesActivity" />
-        <activity
-            android:name=".CreateClassActivity"
-            android:parentActivityName=".ClassesActivity" />
-        <activity
-            android:name=".JoinClassActivity"
-            android:parentActivityName=".ClassesActivity" />
-        <activity android:name=".ClassPageActivity" />
-        <activity android:name=".AboutUsActivity" />
-        <activity
-            android:name=".ClassInfoActivity"
-            android:parentActivityName=".ClassPageActivity" />
-        <activity
-            android:name=".ClassSettingsActivity"
-            android:parentActivityName=".ClassPageActivity">
+        <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateClassworkActivity"></activity>
+        <activity android:name=".SigninActivity" />
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ClassesActivity"></activity>
+        <activity
+            android:name=".CreateClassActivity"
+            android:parentActivityName=".ClassesActivity" />
+        <activity
+            android:name=".JoinClassActivity"
+            android:parentActivityName=".ClassesActivity" />
+        <activity android:name=".ClassPageActivity"></activity>
+        <activity android:name=".AboutUsActivity"></activity>
+        <activity
+            android:name=".ClassInfoActivity"
+            android:parentActivityName=".ClassPageActivity" />
+        <activity
+            android:name=".ClassSettingsActivity"
+            android:parentActivityName=".ClassPageActivity" />
+        <activity android:name=".CreateClassworkActivity" />
+        <activity android:name=".ClassworkInfoActivity"></activity>
     </application>
 
 </manifest>

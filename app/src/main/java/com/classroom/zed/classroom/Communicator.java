@@ -13,48 +13,49 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Communicator extends AsyncTask<String, Void, String> {
+public class Communicator extends AsyncTask<String, Void, String>{
 
-    static final String IP_ADDRESS = "";
-    static final int PORT_NUMBER = 0;
+    static final String IP_ADDRESS = "172.20.168.184";
+    static final int PORT_NUMBER = 2003;
 
-    static Socket socket;
+
+    static Socket socket ;
     static DataInputStream dataInputStream;
     static DataOutputStream dataOutputStream;
+    static boolean isSocketCreated = false;
     String input = "";
 
-    public static void connect(){
-        try {
-            socket = new Socket(IP_ADDRESS, PORT_NUMBER);
-            dataInputStream = new DataInputStream(socket.getInputStream());
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
     }
 
     @Override
     protected String doInBackground(String... strings) {
+
+        if(!isSocketCreated){
+            try {
+                socket = new Socket(IP_ADDRESS, PORT_NUMBER);
+                dataInputStream = new DataInputStream(socket.getInputStream());
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                isSocketCreated = true;
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+
+        }
 
         String output = strings[0];
 
         try {
             dataOutputStream.writeUTF(output);
             dataOutputStream.flush();
+            Log.d("Client request", "Me to Server: " + output);
 
             input = dataInputStream.readUTF();
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                dataOutputStream.close();
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
         }
 
         return input;
@@ -62,7 +63,7 @@ public class Communicator extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        Log.d("Server response", "Server: " + input);
+        Log.d("Server response", "Server: " + s);
         super.onPostExecute(s);
     }
 }

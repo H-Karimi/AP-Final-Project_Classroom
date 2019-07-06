@@ -16,13 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateClassActivity extends AppCompatActivity {
+    String input = "";
+
     EditText name_et;
     TextView nameError_tv;
     EditText section_et;
     TextView sectionError_tv;
     EditText room_et;
     TextView roomError_tv;
-    EditText subject_et;
 
     MenuItem create_sub_menu;
 
@@ -39,7 +40,6 @@ public class CreateClassActivity extends AppCompatActivity {
         sectionError_tv = findViewById(R.id.sectionError_tv);
         room_et = findViewById(R.id.room_et);
         roomError_tv = findViewById(R.id.roomError_tv);
-        subject_et = findViewById(R.id.subject_et);
 
         create_sub_menu = findViewById(R.id.create_submenu);
 
@@ -99,10 +99,21 @@ public class CreateClassActivity extends AppCompatActivity {
             case R.id.refresh_create_class_menu:
                 break;
             case R.id.aboutus_create_class_menu:
+                intent = new Intent(CreateClassActivity.this, AboutUsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.create_submenu:
                 if(name_et.getText().toString().trim().length() > 0  &&  room_et.getText().toString().trim().length() > 0) {
+                    Communicator communicator = new Communicator();
+                    communicator.execute("M#" + name_et.getText().toString().trim() + "#" + section_et.getText().toString().trim() + "#" + room_et.getText().toString().trim());
+                    try {
+                        input = communicator.get();
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                     intent = new Intent(CreateClassActivity.this, ClassPageActivity.class);
+                    intent.putExtra("ClassCode", input.split("#")[1]);
+                    intent.putExtra("ClassState", "T");
                     startActivity(intent);
                 } else {
                     if(name_et.getText().toString().trim().equals(""))

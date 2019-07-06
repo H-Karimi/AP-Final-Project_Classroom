@@ -14,6 +14,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
         signin_b = findViewById(R.id.signin_b);
         signup_b = findViewById(R.id.signup_b);
 

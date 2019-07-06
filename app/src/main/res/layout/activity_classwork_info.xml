@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ClassInfoActivity">
+    tools:context=".ClassworkInfoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,16 +13,16 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/class_info_name_tv"
+            android:id="@+id/classwork_info_name_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:text="Class Number1"
+            android:text="Classwork Number1"
             android:textSize="24sp"
             android:textColor="@color/colorPrimaryDark"/>
 
         <TextView
-            android:id="@+id/class_info_description_tv"
+            android:id="@+id/classwork_info_description_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
@@ -31,13 +31,30 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Room"
+            android:text="Topic"
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/class_info_room_tv"
+            android:id="@+id/classwork_info_topic_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="103" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/classwork_info_date_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="103" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
+
 </RelativeLayout>

@@ -15,9 +15,11 @@ public class PeopleFragment_RecyclerAdapter_Inner extends RecyclerView.Adapter<P
 
     private Context context;
     private List<String> strings;
-    public PeopleFragment_RecyclerAdapter_Inner(Context context, List<String> strings){
+    private ClassInfo classInfo;
+    public PeopleFragment_RecyclerAdapter_Inner(Context context, List<String> strings, ClassInfo classInfo){
         this.context = context;
         this.strings = strings;
+        this.classInfo = classInfo;
     }
 
     @NonNull

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,15 @@ public class PeopleFragment_RecyclerAdapter_Outer extends RecyclerView.Adapter<P
 
     private Context context;
     private List<String> strings;
+    private ClassInfo classInfo;
 
     private LinearLayoutManager linearLayoutManager;
     private PeopleFragment_RecyclerAdapter_Inner peopleFragment_recyclerAdapter_inner;
 
-    public PeopleFragment_RecyclerAdapter_Outer(Context context, List<String> strings) {
+    public PeopleFragment_RecyclerAdapter_Outer(Context context, List<String> strings, ClassInfo classInfo) {
         this.context = context;
         this.strings = strings;
+        this.classInfo = classInfo;
     }
 
     @NonNull
@@ -34,9 +37,10 @@ public class PeopleFragment_RecyclerAdapter_Outer extends RecyclerView.Adapter<P
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
-        viewHolder.people_title_tv.setText(strings.get(i));
+        viewHolder.people_title_tv.setText(strings.get(i).split("#")[0]);
+
         linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        peopleFragment_recyclerAdapter_inner = new PeopleFragment_RecyclerAdapter_Inner(this.context, getList());
+        peopleFragment_recyclerAdapter_inner = new PeopleFragment_RecyclerAdapter_Inner(this.context, getList(strings.get(i)), classInfo);
         viewHolder.people_inner_recycler_view.setLayoutManager(linearLayoutManager);
         viewHolder.people_inner_recycler_view.setAdapter(peopleFragment_recyclerAdapter_inner);
     }
@@ -57,16 +61,12 @@ public class PeopleFragment_RecyclerAdapter_Outer extends RecyclerView.Adapter<P
     }
 
 
-    private List<String> getList(){
+    private List<String> getList(String input){
         List<String> list = new ArrayList<>();
-        list.add("Asghar Asghari");
-        list.add("Mamad Mamadi");
-        list.add("Jafar Jafari");
-        list.add("Abbas Abbasi");
-        list.add("Asghar Asghari");
-        list.add("Mamad Mamadi");
-        list.add("Jafar Jafari");
-        list.add("Abbas Abbasi");
+        input = input.substring(input.indexOf('#')+1);
+        for (int i = 0; i < input.split("#").length; i++) {
+            list.add(input.split("#")[i]);
+        }
         return list;
     }
 }
