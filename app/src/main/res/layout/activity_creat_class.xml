@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="70 characters at most."
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/room_et"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:hint="Room"
             android:inputType="numberDecimal"
-            android:maxLength="5"/>
+            android:maxLength="5" />
 
         <TextView
             android:id="@+id/roomError_tv"

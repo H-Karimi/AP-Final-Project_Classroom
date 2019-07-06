@@ -43,8 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:textColor="#f4045c"
-                android:textSize="14sp"
-                />
+                android:textSize="14sp" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -56,8 +55,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:maxLength="70"
-                    android:hint="Description" />
+                    android:hint="Description"
+                    android:maxLength="70" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -81,8 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:textColor="#f4045c"
-                android:textSize="14sp"
-                />
+                android:textSize="14sp" />
 
         </LinearLayout>
 

@@ -7,19 +7,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
 
 public class SigninActivity extends AppCompatActivity {
 
-    String output = "";
-    String input = "";
+    private String output = "";
+    private String input = "";
 
-    EditText username_et;
-    EditText password_et;
-    TextView usernameError_tv;
-    TextView passwordError_tv;
-    Button signin_b;
+    private EditText username_et;
+    private EditText password_et;
+    private TextView usernameError_tv;
+    private TextView passwordError_tv;
+    private Button signin_b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +36,12 @@ public class SigninActivity extends AppCompatActivity {
         username_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
                     if (username_et.getText().toString().trim().equals(""))
                         usernameError_tv.setText("Username field cannot be empty.");
                     else
                         usernameError_tv.setText("");
-                }
-                else {
+                } else {
                     usernameError_tv.setText("");
                 }
             }
@@ -50,13 +50,12 @@ public class SigninActivity extends AppCompatActivity {
         password_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
                     if (password_et.getText().toString().trim().equals(""))
                         passwordError_tv.setText("Password field cannot be empty.");
                     else
                         passwordError_tv.setText("");
-                }
-                else {
+                } else {
                     passwordError_tv.setText("");
                 }
             }
@@ -65,7 +64,7 @@ public class SigninActivity extends AppCompatActivity {
         signin_b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!username_et.getText().toString().trim().equals("")  &&  !password_et.getText().toString().trim().equals("")) {
+                if (!username_et.getText().toString().trim().equals("") && !password_et.getText().toString().trim().equals("")) {
                     output = "L#" + username_et.getText().toString().trim() + "#" + password_et.getText().toString().trim();
                     Communicator communicator = new Communicator();
                     communicator.execute(output);
@@ -74,18 +73,16 @@ public class SigninActivity extends AppCompatActivity {
                     } catch (InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
-                    if(input.equals("E#1")){
+                    if (input.equals("E#1")) {
                         usernameError_tv.setText("Username not found.");
-                    }
-                    else if(input.equals("E#2")){
+                    } else if (input.equals("E#2")) {
                         passwordError_tv.setText("Password is incorrect");
-                    }
-                    else if (input.equals("E#0")){
+                    } else if (input.equals("E#0")) {
+                        Toast.makeText(SigninActivity.this, "Signed in", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(SigninActivity.this, ClassesActivity.class);
                         startActivity(intent);
                     }
-                }
-                else {
+                } else {
                     if (password_et.getText().toString().trim().equals(""))
                         passwordError_tv.setText("Password field cannot be empty.");
                     else

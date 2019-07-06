@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="25dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="25dp">
 
         <TextView
             android:id="@+id/classwork_info_name_tv"
@@ -18,8 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:text="Classwork Number1"
-            android:textSize="24sp"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/classwork_info_description_tv"
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Topic"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/classwork_info_topic_tv"
@@ -44,17 +44,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Date"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/classwork_info_date_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:text="103" />
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/classwork_info_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </LinearLayout>
 
 </RelativeLayout>

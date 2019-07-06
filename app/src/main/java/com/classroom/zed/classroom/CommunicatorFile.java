@@ -17,12 +17,12 @@ public class CommunicatorFile extends AsyncTask<String, Void, Void> {
     static DataOutputStream dataOutputStream;
     String input = "";
 
-    public static void connect(){
+    public static void connect() {
         try {
             socket = Communicator.socket;
             dataInputStream = Communicator.dataInputStream;
             dataOutputStream = Communicator.dataOutputStream;
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

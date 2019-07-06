@@ -30,7 +30,7 @@ public class PeopleFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_people, null);
 
-        ClassPageActivity activity = (ClassPageActivity)getActivity();
+        ClassPageActivity activity = (ClassPageActivity) getActivity();
         input = activity.getClassInfo();
         Log.d("Class::", input);
 
@@ -53,25 +53,26 @@ public class PeopleFragment extends Fragment {
 //        return list;
 //    }
 
-    private List<String> getList(String input){
+    private List<String> getList(String input) {
         List<String> list = new ArrayList<>();
 
         String teachers = "Teachers";
         for (int i = 0; i < input.split("#")[3].split(";").length; i++) {
             String teacher = input.split("#")[3].split(";")[i];
-            if(!teacher.isEmpty())
+            if (!teacher.isEmpty())
                 teachers += ("#" + teacher);
         }
 
         String students = "Students";
         for (int i = 0; i < input.split("#")[4].split(";").length; i++) {
             String student = input.split("#")[4].split(";")[i];
-            if(!student.isEmpty())
+            if (!student.isEmpty())
                 students += ("#" + student);
         }
 
         list.add(teachers);
-        list.add(students);
+        if (students.length() > 8)
+            list.add(students);
         return list;
     }
 }

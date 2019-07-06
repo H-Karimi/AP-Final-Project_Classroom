@@ -10,6 +10,7 @@ public class AboutUsActivity extends AppCompatActivity {
     private TextView about_us_description_tv;
     private TextView about_us_email_tv;
     private TextView about_us_student_code_tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,14 +20,14 @@ public class AboutUsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about_us);
 
         about_us_description_tv = findViewById(R.id.about_us_description_tv);
-        about_us_email_tv= findViewById(R.id.about_us_email_tv);
-        about_us_student_code_tv= findViewById(R.id.about_us_student_code_tv);
+        about_us_email_tv = findViewById(R.id.about_us_email_tv);
+        about_us_student_code_tv = findViewById(R.id.about_us_student_code_tv);
 
         Communicator communicator = new Communicator();
         communicator.execute("@@@AUP");
         try {
             input = communicator.get();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

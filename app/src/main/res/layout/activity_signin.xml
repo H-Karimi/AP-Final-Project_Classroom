@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="40dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="40dp">
 
         <EditText
             android:id="@+id/username_et"
@@ -18,8 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:hint="Username"
-            android:inputType="textPersonName"
-            />
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/usernameError_tv"
@@ -27,8 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:textColor="#f4045c"
-            android:textSize="14sp"
-            />
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/password_et"
@@ -44,17 +42,16 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:textColor="#f4045c"
-            android:textSize="14sp"
-            />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/signin_b"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:textColor="@color/white"
+            android:background="@color/colorPrimaryDark"
             android:text="Sign-in"
-            android:background="@color/colorPrimaryDark"/>
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

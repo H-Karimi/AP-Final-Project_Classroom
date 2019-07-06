@@ -28,18 +28,18 @@ public class ClassSettingsActivity extends AppCompatActivity {
     private TextView class_settings_code_tv;
     private FrameLayout class_settings_stream_frame;
     private TextView class_settings_stream_tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Class Settings");
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_class_settings);
 
         Communicator communicator = new Communicator();
         communicator.execute(getIntent().getExtras().getString("ClassCode") + "@@@COP");
         try {
             input = communicator.get();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -58,7 +58,7 @@ public class ClassSettingsActivity extends AppCompatActivity {
         class_settings_code_tv.setText("Class code: " + input.split("~")[1]);
         class_settings_description_et.setText(input.split("~")[2]);
         class_settings_room_et.setText(input.split("~")[3]);
-        switch (input.split("~")[4]){
+        switch (input.split("~")[4]) {
             case "B":
                 class_settings_stream_tv.setText("Teachers and students can leave comment.");
                 break;
@@ -92,18 +92,18 @@ public class ClassSettingsActivity extends AppCompatActivity {
             output = class_settings_title_et.getText().toString().trim() + "#" +
                     class_settings_description_et.getText().toString().trim() + "#" +
                     class_settings_room_et.getText().toString().trim() + "#";
-            if(class_settings_stream_tv.getText().toString().charAt(0) == 'T')
+            if (class_settings_stream_tv.getText().toString().charAt(0) == 'T')
                 output += "B";
-            if(class_settings_stream_tv.getText().toString().charAt(0) == 'O')
+            if (class_settings_stream_tv.getText().toString().charAt(0) == 'O')
                 output += "C";
-            if(class_settings_stream_tv.getText().toString().charAt(0) == 'N')
+            if (class_settings_stream_tv.getText().toString().charAt(0) == 'N')
                 output += "N";
 
             Communicator communicator = new Communicator();
             communicator.execute(output);
             try {
                 input = communicator.get();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             Toast.makeText(ClassSettingsActivity.this, "Changes saved.", Toast.LENGTH_LONG).show();
@@ -111,8 +111,7 @@ public class ClassSettingsActivity extends AppCompatActivity {
             intent.putExtra("ClassCode", class_settings_code_tv.getText().toString().replace("Class code: ", ""));
             intent.putExtra("ClassState", "T");
             startActivity(intent);
-        }
-        else {
+        } else {
             if (class_settings_title_et.getText().toString().trim().isEmpty())
                 class_settings_title_error_tv.setText("Class title field cannot be empty.");
             else

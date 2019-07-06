@@ -26,11 +26,11 @@ public class CreateClassworkActivity extends AppCompatActivity {
 
     private Calendar calendar;
     private DatePickerDialog datePickerDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("New Classwork");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_create_classwork);
 
         Communicator communicator = new Communicator();
@@ -54,7 +54,7 @@ public class CreateClassworkActivity extends AppCompatActivity {
                 datePickerDialog = new DatePickerDialog(CreateClassworkActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String date = String.format("%d/%02d/%02d", year, month, dayOfMonth);
+                        String date = String.format("%04d/%02d/%02d", year, month, dayOfMonth);
                         create_classwork_due_et.setText(date);
                     }
                 }, year, month, day);
@@ -71,11 +71,14 @@ public class CreateClassworkActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getTitle().equals("Send")){
-            if(!create_classwork_title_et.getText().toString().trim().isEmpty()) {
+        if (item.getTitle().equals("Send")) {
+            if (!create_classwork_title_et.getText().toString().trim().isEmpty()) {
                 create_classwork_title_error_tv.setText("");
                 Communicator communicator = new Communicator();
-                communicator.execute("N#" + create_classwork_title_et.getText().toString().trim() + "#" + create_classwork_topic_et.getText().toString() + "#" + create_classwork_description_et.getText().toString().trim() + "#" + create_classwork_points_et.getText().toString() + "#" + create_classwork_due_et.getText().toString() + "%23/59");
+
+                String date = create_classwork_due_et.getText().toString().trim().equals("NoDueDate") ? "2222/12/22" : create_classwork_due_et.getText().toString().trim();
+
+                communicator.execute("N#" + create_classwork_title_et.getText().toString().trim() + "#" + create_classwork_topic_et.getText().toString() + "#" + create_classwork_description_et.getText().toString().trim() + "#" + create_classwork_points_et.getText().toString() + "#" + date + "%23/59");
                 try {
                     input = communicator.get();
                 } catch (Exception e) {
@@ -85,11 +88,9 @@ public class CreateClassworkActivity extends AppCompatActivity {
                 intent.putExtra("ClassCode", getIntent().getExtras().getString("ClassCode"));
                 intent.putExtra("ClassState", getIntent().getExtras().getString("ClassState"));
                 startActivity(intent);
-            }
-            else
+            } else
                 create_classwork_title_error_tv.setText("Title field cannot be empty.");
-        }
-        else if(item.getTitle().equals("Attach")){
+        } else if (item.getTitle().equals("Attach")) {
 
         }
         return super.onOptionsItemSelected(item);

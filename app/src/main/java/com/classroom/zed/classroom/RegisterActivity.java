@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -24,15 +25,15 @@ import java.util.concurrent.ExecutionException;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    String output = "";
-    String input = "";
+    private String output = "";
+    private String input = "";
 
-    ImageView image_iv;
-    EditText username_et;
-    EditText password_et;
-    TextView usernameError_tv;
-    TextView passwordError_tv;
-    Button register_b;
+    private ImageView image_iv;
+    private EditText username_et;
+    private EditText password_et;
+    private TextView usernameError_tv;
+    private TextView passwordError_tv;
+    private Button register_b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +124,8 @@ public class RegisterActivity extends AppCompatActivity {
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(input.equals("E#0")){
+                    if (input.equals("E#0")) {
+                        Toast.makeText(RegisterActivity.this, "Signed up", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(RegisterActivity.this, ClassesActivity.class);
                         startActivity(intent);
                     }
@@ -179,12 +181,12 @@ public class RegisterActivity extends AppCompatActivity {
         return res;
     }
 
-    private void checkUsername(){
+    private void checkUsername() {
         Communicator communicator = new Communicator();
         communicator.execute("C#" + username_et.getText().toString().trim() + "#.");
         try {
             input = communicator.get();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

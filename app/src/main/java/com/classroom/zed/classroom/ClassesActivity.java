@@ -18,8 +18,7 @@ import java.util.List;
 
 public class ClassesActivity extends AppCompatActivity {
 
-    String output = "";
-    String input = "";
+    private String input = "";
 
     private RecyclerView myRecyclerView;
     private TextView classes_noclass_tv;
@@ -69,12 +68,12 @@ public class ClassesActivity extends AppCompatActivity {
 
         for (int i = 0; i < teacherClasses.length; i++) {
             String s = teacherClasses[i];
-            if (s.length()>0)
+            if (s.length() > 0)
                 list.add(s.split("!")[0] + "#" + s.split("!")[1] + "#" + s.split("!")[2] + " students#" + s.split("!")[3] + "#T");
         }
         for (int i = 0; i < studentClasses.length; i++) {
             String s = studentClasses[i];
-            if(s.length()>0)
+            if (s.length() > 0)
                 list.add(s.split("!")[0] + "#" + s.split("!")[1] + "#" + s.split("!")[2] + "#" + s.split("!")[3] + "#S");
         }
 
@@ -91,7 +90,7 @@ public class ClassesActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getTitle().equals("Refresh")) {
             refresh();
-        } else if(item.getTitle().equals("About us")){
+        } else if (item.getTitle().equals("About us")) {
             Intent intent = new Intent(ClassesActivity.this, AboutUsActivity.class);
             startActivity(intent);
         } else if (item.getTitle().equals("Create class")) {

@@ -16,22 +16,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateClassActivity extends AppCompatActivity {
-    String input = "";
+    private String input = "";
 
-    EditText name_et;
-    TextView nameError_tv;
-    EditText section_et;
-    TextView sectionError_tv;
-    EditText room_et;
-    TextView roomError_tv;
+    private EditText name_et;
+    private TextView nameError_tv;
+    private EditText section_et;
+    private TextView sectionError_tv;
+    private EditText room_et;
+    private TextView roomError_tv;
 
-    MenuItem create_sub_menu;
+    private MenuItem create_sub_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("Create class");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_creat_class);
 
         name_et = findViewById(R.id.name_et);
@@ -46,8 +45,8 @@ public class CreateClassActivity extends AppCompatActivity {
         sectionError_tv.setTextColor(sectionError_tv.getHintTextColors());
 
         name_et.setOnFocusChangeListener((v, hasFocus) -> {
-            if(!hasFocus){
-                if(name_et.getText().toString().trim().equals(""))
+            if (!hasFocus) {
+                if (name_et.getText().toString().trim().equals(""))
                     nameError_tv.setText("Class name field cannot be empty.");
                 else
                     nameError_tv.setText("");
@@ -62,7 +61,7 @@ public class CreateClassActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() > 0)
+                if (s.length() > 0)
                     sectionError_tv.setText("");
                 else
                     sectionError_tv.setText("70 characters at most.");
@@ -75,8 +74,8 @@ public class CreateClassActivity extends AppCompatActivity {
         });
 
         room_et.setOnFocusChangeListener((v, hasFocus) -> {
-            if(!hasFocus){
-                if(room_et.getText().toString().trim().equals(""))
+            if (!hasFocus) {
+                if (room_et.getText().toString().trim().equals(""))
                     roomError_tv.setText("Room number field cannot be empty.");
                 else
                     roomError_tv.setText("");
@@ -95,7 +94,7 @@ public class CreateClassActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.refresh_create_class_menu:
                 break;
             case R.id.aboutus_create_class_menu:
@@ -103,24 +102,25 @@ public class CreateClassActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.create_submenu:
-                if(name_et.getText().toString().trim().length() > 0  &&  room_et.getText().toString().trim().length() > 0) {
+                if (name_et.getText().toString().trim().length() > 0 && room_et.getText().toString().trim().length() > 0) {
                     Communicator communicator = new Communicator();
                     communicator.execute("M#" + name_et.getText().toString().trim() + "#" + section_et.getText().toString().trim() + "#" + room_et.getText().toString().trim());
                     try {
                         input = communicator.get();
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    Toast.makeText(CreateClassActivity.this, "Class created", Toast.LENGTH_LONG).show();
                     intent = new Intent(CreateClassActivity.this, ClassPageActivity.class);
                     intent.putExtra("ClassCode", input.split("#")[1]);
                     intent.putExtra("ClassState", "T");
                     startActivity(intent);
                 } else {
-                    if(name_et.getText().toString().trim().equals(""))
+                    if (name_et.getText().toString().trim().equals(""))
                         nameError_tv.setText("Class name field cannot be empty.");
                     else
                         nameError_tv.setText("");
-                    if(room_et.getText().toString().trim().equals(""))
+                    if (room_et.getText().toString().trim().equals(""))
                         roomError_tv.setText("Room number field cannot be empty.");
                     else
                         roomError_tv.setText("");

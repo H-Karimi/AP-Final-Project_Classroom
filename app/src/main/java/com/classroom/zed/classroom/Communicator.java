@@ -13,13 +13,13 @@ import java.io.Serializable;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Communicator extends AsyncTask<String, Void, String>{
+public class Communicator extends AsyncTask<String, Void, String> {
 
     static final String IP_ADDRESS = "172.20.168.184";
     static final int PORT_NUMBER = 2003;
 
 
-    static Socket socket ;
+    static Socket socket;
     static DataInputStream dataInputStream;
     static DataOutputStream dataOutputStream;
     static boolean isSocketCreated = false;
@@ -33,13 +33,13 @@ public class Communicator extends AsyncTask<String, Void, String>{
     @Override
     protected String doInBackground(String... strings) {
 
-        if(!isSocketCreated){
+        if (!isSocketCreated) {
             try {
                 socket = new Socket(IP_ADDRESS, PORT_NUMBER);
                 dataInputStream = new DataInputStream(socket.getInputStream());
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
                 isSocketCreated = true;
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 

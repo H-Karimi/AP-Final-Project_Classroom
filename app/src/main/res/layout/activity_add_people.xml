@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".JoinClassActivity">
+    tools:context=".AddPeopleActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,19 +14,20 @@
 
 
         <TextView
+            android:id="@+id/add_people_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ask your teacher for the class code, then enter it here." />
+            android:text="Enter a username to add as a student." />
 
         <EditText
-            android:id="@+id/join_class_et"
+            android:id="@+id/add_people_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Class code"
-            android:inputType="numberDecimal" />
+            android:hint="Username"
+            android:inputType="textPersonName" />
 
         <TextView
-            android:id="@+id/join_class_error_tv"
+            android:id="@+id/add_people_error_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"

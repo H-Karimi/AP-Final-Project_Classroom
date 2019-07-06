@@ -36,13 +36,15 @@ public class ClassWorkActivity_RecyclerAdapter_Outer extends RecyclerView.Adapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
-        viewHolder.classwork_title_tv.setText(strings.get(i).split("!")[0]);
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+        myViewHolder.classwork_title_tv.setText(strings.get(i).split("!")[0]);
 
         linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         classWorkActivity_recyclerAdapter_inner = new ClassWorkActivity_RecyclerAdapter_Inner(this.context, strings.get(i).split("!"), classInfo);
-        viewHolder.classwork_inner_recycler_view.setLayoutManager(linearLayoutManager);
-        viewHolder.classwork_inner_recycler_view.setAdapter(classWorkActivity_recyclerAdapter_inner);
+        myViewHolder.classwork_inner_recycler_view.setLayoutManager(linearLayoutManager);
+        myViewHolder.classwork_inner_recycler_view.setAdapter(classWorkActivity_recyclerAdapter_inner);
+
+
     }
 
     @Override

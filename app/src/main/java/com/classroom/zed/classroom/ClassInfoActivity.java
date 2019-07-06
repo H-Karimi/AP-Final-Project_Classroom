@@ -11,6 +11,7 @@ public class ClassInfoActivity extends AppCompatActivity {
     private TextView class_info_name_tv;
     private TextView class_info_description_tv;
     private TextView class_info_room_tv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +23,7 @@ public class ClassInfoActivity extends AppCompatActivity {
         communicator.execute(getIntent().getExtras().getString("ClassCode") + "@@@CIP");
         try {
             input = communicator.get();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -33,7 +34,7 @@ public class ClassInfoActivity extends AppCompatActivity {
 
         class_info_name_tv.setText(input.split("~")[0]);
         class_info_description_tv.setText(input.split("~")[2]);
-        if(class_info_description_tv.getText().toString().trim().isEmpty())
+        if (class_info_description_tv.getText().toString().trim().isEmpty())
             class_info_description_tv.setVisibility(View.GONE);
         else
             class_info_description_tv.setVisibility(View.VISIBLE);

@@ -40,7 +40,7 @@ public class ClassworkFragment extends Fragment implements PopupMenu.OnMenuItemC
         classwork_noclasswork_tv = rootView.findViewById(R.id.classwork_noclasswork_tv);
         floatingActionButton = rootView.findViewById(R.id.floatingActionButton);
 
-        ClassPageActivity activity = (ClassPageActivity)getActivity();
+        ClassPageActivity activity = (ClassPageActivity) getActivity();
         input = activity.getClassInfo();
 
         classInfo = new ClassInfo(input.split("#")[1].split("~")[1], input.split("#")[0]);
@@ -68,8 +68,7 @@ public class ClassworkFragment extends Fragment implements PopupMenu.OnMenuItemC
                     popupMenu.show();
                 }
             });
-        }
-        else if(classInfo.getState().equals("S")){
+        } else if (classInfo.getState().equals("S")) {
             floatingActionButton.setVisibility(View.GONE);
         }
 
@@ -102,7 +101,7 @@ public class ClassworkFragment extends Fragment implements PopupMenu.OnMenuItemC
         List<String> list = new ArrayList<>();
         String[] topics = s.split("~");
         for (int i = 0; i < topics.length; i++) {
-            if(!topics[i].isEmpty())
+            if (!topics[i].isEmpty())
                 list.add(topics[i]);
         }
         return list;

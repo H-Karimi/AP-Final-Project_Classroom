@@ -13,13 +13,12 @@ public class ClassPageActivity extends AppCompatActivity {
 
     private String input = "";
 
-    BottomNavigationView bottomNavigationView;
-    ClassInfo classInfo;
+    private BottomNavigationView bottomNavigationView;
+    private ClassInfo classInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Class");
         setContentView(R.layout.activity_class_page);
         classInfo = new ClassInfo(getIntent().getExtras().getString("ClassCode"), getIntent().getExtras().getString("ClassState"));
 
@@ -27,9 +26,11 @@ public class ClassPageActivity extends AppCompatActivity {
         communicator.execute(classInfo.getCode() + "@@@CP");
         try {
             input = communicator.get();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+        setTitle(input.split("#")[1].split("~")[0]);
 
         loadFragment(new ClassworkFragment());
 
@@ -50,13 +51,14 @@ public class ClassPageActivity extends AppCompatActivity {
                             loadFragment(new PeopleFragment());
                             return true;
 
-                        default:return true;
+                        default:
+                            return true;
                     }
                 });
     }
 
-    private boolean loadFragment(Fragment fragment){
-        if(fragment != null){
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
             return true;
         }
@@ -67,11 +69,11 @@ public class ClassPageActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_class_page, menu);
-        if (classInfo.getState().equals("T")){
+        if (classInfo.getState().equals("T")) {
             menu.findItem(R.id.class_page_info).setVisible(false);
             menu.findItem(R.id.class_page_settings).setVisible(true);
         }
-        if (classInfo.getState().equals("S")){
+        if (classInfo.getState().equals("S")) {
             menu.findItem(R.id.class_page_settings).setVisible(false);
             menu.findItem(R.id.class_page_info).setVisible(true);
         }
@@ -81,26 +83,23 @@ public class ClassPageActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = null;
-        if(item.getTitle().equals("Classes")){
+        if (item.getTitle().equals("Classes")) {
             intent = new Intent(ClassPageActivity.this, ClassesActivity.class);
-        }
-        else if(item.getTitle().equals("About us")){
+        } else if (item.getTitle().equals("About us")) {
             intent = new Intent(ClassPageActivity.this, AboutUsActivity.class);
-        }
-        else if(item.getTitle().equals("Info")){
+        } else if (item.getTitle().equals("Info")) {
             intent = new Intent(ClassPageActivity.this, ClassInfoActivity.class);
             intent.putExtra("ClassCode", classInfo.getCode());
-        }
-        else if(item.getTitle().equals("Settings")){
+        } else if (item.getTitle().equals("Settings")) {
             intent = new Intent(ClassPageActivity.this, ClassSettingsActivity.class);
             intent.putExtra("ClassCode", classInfo.getCode());
         }
-        if(intent != null)
+        if (intent != null)
             startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
 
-    public String getClassInfo(){
+    public String getClassInfo() {
         return input;
     }
 }
