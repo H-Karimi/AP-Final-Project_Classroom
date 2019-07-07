@@ -70,13 +70,6 @@ public class ClassSettingsActivity extends AppCompatActivity {
                 break;
         }
 
-
-        class_settings_stream_frame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
 

@@ -22,7 +22,7 @@ public class JoinClassActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Join class");
+        setTitle("Join class");
         setContentView(R.layout.activity_join_class);
 
         join_class_et = findViewById(R.id.join_class_et);

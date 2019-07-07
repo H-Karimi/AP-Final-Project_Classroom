@@ -22,17 +22,9 @@ public class ClassPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_class_page);
         classInfo = new ClassInfo(getIntent().getExtras().getString("ClassCode"), getIntent().getExtras().getString("ClassState"));
 
-        Communicator communicator = new Communicator();
-        communicator.execute(classInfo.getCode() + "@@@CP");
-        try {
-            input = communicator.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        refresh();
 
         setTitle(input.split("#")[1].split("~")[0]);
-
-        loadFragment(new ClassworkFragment());
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.navigation_classwork);
@@ -55,6 +47,12 @@ public class ClassPageActivity extends AppCompatActivity {
                             return true;
                     }
                 });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        refresh();
     }
 
     private boolean loadFragment(Fragment fragment) {
@@ -93,10 +91,24 @@ public class ClassPageActivity extends AppCompatActivity {
         } else if (item.getTitle().equals("Settings")) {
             intent = new Intent(ClassPageActivity.this, ClassSettingsActivity.class);
             intent.putExtra("ClassCode", classInfo.getCode());
+        } else if (item.getTitle().equals("Refresh")) {
+            refresh();
         }
         if (intent != null)
             startActivity(intent);
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refresh(){
+        Communicator communicator = new Communicator();
+        communicator.execute(classInfo.getCode() + "@@@CP");
+        try {
+            input = communicator.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        loadFragment(new ClassworkFragment());
     }
 
     public String getClassInfo() {

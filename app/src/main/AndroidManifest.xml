@@ -22,20 +22,12 @@
         <activity android:name=".SigninActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ClassesActivity" />
-        <activity
-            android:name=".CreateClassActivity"
-            android:parentActivityName=".ClassesActivity" />
-        <activity
-            android:name=".JoinClassActivity"
-            android:parentActivityName=".ClassesActivity" />
+        <activity android:name=".CreateClassActivity" />
+        <activity android:name=".JoinClassActivity" />
         <activity android:name=".ClassPageActivity" />
         <activity android:name=".AboutUsActivity" />
-        <activity
-            android:name=".ClassInfoActivity"
-            android:parentActivityName=".ClassPageActivity" />
-        <activity
-            android:name=".ClassSettingsActivity"
-            android:parentActivityName=".ClassPageActivity" />
+        <activity android:name=".ClassInfoActivity" />
+        <activity android:name=".ClassSettingsActivity" />
         <activity android:name=".CreateClassworkActivity" />
         <activity android:name=".ClassworkInfoActivity" />
         <activity android:name=".AddPeopleActivity" />

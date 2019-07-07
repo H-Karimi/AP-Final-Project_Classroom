@@ -30,7 +30,7 @@ public class CreateClassActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle("Create class");
+        setTitle("Create class");
         setContentView(R.layout.activity_creat_class);
 
         name_et = findViewById(R.id.name_et);
